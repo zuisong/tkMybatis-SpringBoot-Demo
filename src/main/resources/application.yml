@@ -1,0 +1,21 @@
+spring:
+  datasource:
+    name: test
+    url: jdbc:mysql://119.29.228.196:3306/test?useUnicode=true&characterEncoding=utf8
+    username: root
+    password: 123
+    driver-class-name: com.mysql.jdbc.Driver
+mybatis:
+  type-aliases-package: tk.mybatis.springboot.model
+  mapper-locations: classpath:mapper/*.xml
+#mapper:
+#  mappers:
+#  - cn.mmooo.dao.WorkerMapper
+  not-empty: false
+  identity: MYSQL
+pagehelper:
+  helperDialect: mysql
+logging:
+  level:
+    root: INFO
+    cn.mmooo: debug
