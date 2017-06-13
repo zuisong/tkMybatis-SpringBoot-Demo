@@ -11,8 +11,8 @@ mybatis:
 #mapper:
 #  mappers:
 #  - cn.mmooo.dao.WorkerMapper
-  not-empty: false
-  identity: MYSQL
+#  not-empty: false
+#  identity: MYSQL
 pagehelper:
   helperDialect: mysql
 logging:
