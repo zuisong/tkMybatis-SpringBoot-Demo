@@ -1,9 +1,9 @@
 spring:
   datasource:
     name: test
-    url: jdbc:mysql://119.29.228.196:3306/test?useUnicode=true&characterEncoding=utf8
-    username: root
-    password: 123
+    url: jdbc:mysql:///test?useUnicode=true&characterEncoding=utf8
+    username: username
+    password: password
     driver-class-name: com.mysql.jdbc.Driver
 mybatis:
   type-aliases-package: tk.mybatis.springboot.model
