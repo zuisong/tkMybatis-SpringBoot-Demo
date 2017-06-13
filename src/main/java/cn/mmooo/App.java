@@ -32,30 +32,32 @@ public class App {
 	public static void main(String[] args) {
 		ConfigurableApplicationContext applicationContext = SpringApplication.run(App.class, args);
 		UserMapper mapper = applicationContext.getBean(UserMapper.class);
-	
-		
-		
-		PageHelper.startPage(100, 10);
+
+		//第二页，每页十条数据
+		PageHelper.startPage(2, 10);
 		List<User> list = mapper.selectAll();
-		
+
 		if (list instanceof Page) {
 			Page<User> selectAll = (Page<User>) list;
 			list = selectAll.getResult();
 			System.out.println("=========进入分页=======");
-			
+
 		}
-		
-		
+
 		list.stream().forEach(System.out::println);
 		// System.out.println(workerMapper.selectAll());
 	}
 
+	private static int i = 1;
+
+	// 打开注释，插入测试数据
 	// @Scheduled(cron = "*/1 * * * * ?")
 	public void test1() {
 		log.info("任务执行,{}", new Date().toString());
 		User user = new User();
-		user.setName("陈健");
+		user.setName("test" + i);
 		mapper.insertSelective(user);
+		i++;
 	}
 
 }
