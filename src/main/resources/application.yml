@@ -1,10 +1,11 @@
 spring:
   datasource:
-    name: test
-    url: jdbc:mysql:///test?useUnicode=true&characterEncoding=utf8
-    username: username
-    password: password
-    driver-class-name: com.mysql.jdbc.Driver
+    schema: classpath:schema.sql
+#    name: test
+#    url: jdbc:mysql:///test?useUnicode=true&characterEncoding=utf8
+#    username: username
+#    password: password
+#    driver-class-name: com.mysql.jdbc.Driver
 mybatis:
   type-aliases-package: tk.mybatis.springboot.model
   mapper-locations: classpath:mapper/*.xml
