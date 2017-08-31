@@ -1,21 +1,30 @@
 spring:
+  transaction:
+    rollback-on-commit-failure: true
+  aop:
+    auto: true
+    proxy-target-class: true
   datasource:
-    schema: classpath:schema.sql
-#    name: test
-#    url: jdbc:mysql:///test?useUnicode=true&characterEncoding=utf8
-#    username: username
-#    password: password
-#    driver-class-name: com.mysql.jdbc.Driver
-mybatis:
-  type-aliases-package: tk.mybatis.springboot.model
-  mapper-locations: classpath:mapper/*.xml
-#mapper:
-#  mappers:
-#  - cn.mmooo.dao.WorkerMapper
-#  not-empty: false
-#  identity: MYSQL
+    druid:
+      master:
+        url: jdbc:mysql://www.mmooo.cn:3306/dynamic_master?useUnicode=true&characterEncoding=UTF-8&serverTimezone=UTC&useSSL=false
+        username: root
+        password: 123
+        initial-size: 2
+      slave:
+        url: jdbc:mysql://www.mmooo.cn:3306/dynamic_slave?useUnicode=true&characterEncoding=UTF-8&serverTimezone=UTC&useSSL=false
+        username: root
+        password: 123
+        initial-size: 4
+
+
+mapper:
+  not-empty: false
+  identity: MYSQL
+
 pagehelper:
   helperDialect: mysql
+
 logging:
   level:
     root: INFO
