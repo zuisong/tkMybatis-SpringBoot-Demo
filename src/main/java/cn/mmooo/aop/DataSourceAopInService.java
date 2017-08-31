@@ -14,6 +14,8 @@ import org.springframework.context.annotation.EnableAspectJAutoProxy;
 import org.springframework.core.PriorityOrdered;
 import org.springframework.stereotype.Component;
 
+import javax.validation.constraints.NotNull;
+
 
 /**
  * 在service层觉得数据源
@@ -28,7 +30,7 @@ public class DataSourceAopInService implements PriorityOrdered {
 
     private Boolean isReadMethod(String methodName) {
         // 方法名以query、find、get、select开头的方法名走从库
-        return StringUtils.startsWithAny(methodName, new String[]{"query", "find", "get", "select"});
+        return StringUtils.startsWithAny(methodName.toLowerCase(), new String[]{"query", "find", "get", "select"});
     }
 
     @Pointcut("execution(* cn.mmooo.service..*.*(..)) ")

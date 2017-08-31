@@ -9,8 +9,6 @@ import java.util.Map;
 
 /**
  * 动态数据源
- *
- * @author trang
  */
 @Slf4j
 public class DynamicDataSource extends AbstractRoutingDataSource {

@@ -2,8 +2,6 @@ package cn.mmooo.config;
 
 /**
  * 动态数据源容器
- *
- * @author trang
  */
 public final class DynamicDataSourceHolder {
     public static final String MASTER_DATA_SOURCE = "Master";
