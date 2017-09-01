@@ -2,7 +2,9 @@ package cn.mmooo.config;
 
 import com.alibaba.druid.pool.DruidDataSource;
 import com.alibaba.druid.spring.boot.autoconfigure.DruidDataSourceBuilder;
+import lombok.experimental.var;
 import lombok.extern.slf4j.Slf4j;
+import lombok.val;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -12,6 +14,9 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 import javax.sql.DataSource;
 import java.util.HashMap;
 import java.util.Map;
+
+import static cn.mmooo.config.DynamicDataSourceHolder.MASTER_DATA_SOURCE;
+import static cn.mmooo.config.DynamicDataSourceHolder.SLAVE_DATA_SOURCE;
 
 /**
  * 多数据库源配置
@@ -24,7 +29,7 @@ public class DataSourceConfiguration {
     private static final String SLAVE_DATA_SOURCE_PREFIX = "spring.datasource.druid.slave";
 
 
-    @Bean(initMethod = "init", destroyMethod = "close")
+    @Bean
     @ConfigurationProperties(MASTER_DATA_SOURCE_PREFIX)
     public DruidDataSource masterDataSource() {
         log.info("------ 初始化 Druid 主数据源 ------");
@@ -32,7 +37,7 @@ public class DataSourceConfiguration {
 
     }
 
-    @Bean(initMethod = "init", destroyMethod = "close")
+    @Bean
     @ConfigurationProperties(SLAVE_DATA_SOURCE_PREFIX)
     public DruidDataSource slaveDataSource() {
         log.info("------ 初始化 Druid 从数据源 ------");
@@ -44,11 +49,9 @@ public class DataSourceConfiguration {
     @Primary
     public DynamicDataSource dataSource(DruidDataSource masterDataSource, DruidDataSource slaveDataSource) {
         log.info("------ 初始化 Dynamic 数据源 ------");
-        Map<String, DataSource> targetDataSources = new HashMap<>();
-        targetDataSources.put(DynamicDataSourceHolder.MASTER_DATA_SOURCE, masterDataSource);
-        targetDataSources.put(DynamicDataSourceHolder.SLAVE_DATA_SOURCE, slaveDataSource);
+        var targetDataSources = new HashMap<String,DataSource>();
+        targetDataSources.put(MASTER_DATA_SOURCE, masterDataSource);
+        targetDataSources.put(SLAVE_DATA_SOURCE, slaveDataSource);
         return new DynamicDataSource(slaveDataSource, targetDataSources);
     }
-
-
 }

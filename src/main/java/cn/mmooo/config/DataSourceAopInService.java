@@ -1,6 +1,5 @@
-package cn.mmooo.aop;
+package cn.mmooo.config;
 
-import cn.mmooo.config.DynamicDataSourceHolder;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.aspectj.lang.JoinPoint;
@@ -8,9 +7,6 @@ import org.aspectj.lang.annotation.After;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
 import org.aspectj.lang.annotation.Pointcut;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.context.annotation.EnableAspectJAutoProxy;
 import org.springframework.core.PriorityOrdered;
 import org.springframework.stereotype.Component;
 
@@ -28,19 +24,18 @@ import javax.validation.constraints.NotNull;
 @Slf4j
 public class DataSourceAopInService implements PriorityOrdered {
 
-    private Boolean isReadMethod(String methodName) {
+    private boolean isReadMethod(@NotNull String methodName) {
         // 方法名以query、find、get、select开头的方法名走从库
         return StringUtils.startsWithAny(methodName.toLowerCase(), new String[]{"query", "find", "get", "select"});
     }
 
     @Pointcut("execution(* cn.mmooo.service..*.*(..)) ")
     public void excudeService() {
-
     }
 
     @After("excudeService()")
     public void clearDataSourceType() {
-        log.debug("清除已经设置的数据类型，方便下次使用");
+        log.debug("清除已经设置的数据库类型，方便下次使用");
         DynamicDataSourceHolder.clear();
     }
 

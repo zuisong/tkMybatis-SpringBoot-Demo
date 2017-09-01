@@ -23,8 +23,6 @@ import cn.mmooo.model.User;
 @SpringBootTest
 public class UserMapperTest {
     @Autowired
-    private DruidDataSource druidDataSource;
-    @Autowired
     private UserMapper userMapper;
     //
     // @Test(timeout=100)
