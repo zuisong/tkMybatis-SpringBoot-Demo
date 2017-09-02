@@ -2,10 +2,9 @@ package cn.mmooo.config;
 
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
-import org.aspectj.lang.JoinPoint;
-import org.aspectj.lang.annotation.After;
+import org.aspectj.lang.ProceedingJoinPoint;
+import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
-import org.aspectj.lang.annotation.Before;
 import org.aspectj.lang.annotation.Pointcut;
 import org.springframework.core.PriorityOrdered;
 import org.springframework.stereotype.Component;
@@ -33,24 +32,44 @@ public class DataSourceAopInService implements PriorityOrdered {
     public void excudeService() {
     }
 
-    @After("excudeService()")
-    public void clearDataSourceType() {
-        log.debug("清除已经设置的数据库类型，方便下次使用");
-        DynamicDataSourceHolder.clear();
-    }
+    /**
+     * 之前的实现方式在Service调用其它service的方法时会再次触发切面，
+     * 新service的数据源设置会覆盖旧的设置，造成写方法中调用读方法会出现问题
+     * <p>
+     * 改进后通不过判断
+     *
+     * @param joinPoint
+     * @return
+     */
+    @Around("excudeService()")
+    public Object setDataSourceType(ProceedingJoinPoint joinPoint) {
 
-    @Before("excudeService()")
-    public void setDataSourceType(JoinPoint joinPoint) {
+        boolean isRoute = false;
 
-        final String methodName = joinPoint.getSignature().getName();
-        if (isReadMethod(methodName)) {
-            log.debug("动态切换数据库===切换到数据库==");
-            DynamicDataSourceHolder.routeSlave();
-        } else {
-            log.debug("动态切换数据库===切换到写数据库==");
-            DynamicDataSourceHolder.routeMaster();
-
+        if (DynamicDataSourceHolder.get() == null) {
+            isRoute = true;
+            final String methodName = joinPoint.getSignature().getName();
+            if (isReadMethod(methodName)) {
+                log.debug("动态切换数据库===切换到数据库==");
+                DynamicDataSourceHolder.routeSlave();
+            } else {
+                log.debug("动态切换数据库===切换到写数据库==");
+                DynamicDataSourceHolder.routeMaster();
+            }
         }
+        Object proceed = null;
+        try {
+            Object[] args = joinPoint.getArgs();
+            proceed = joinPoint.proceed(args);
+        } catch (Throwable throwable) {
+            throwable.printStackTrace();
+        } finally {
+            if (isRoute) {
+                DynamicDataSourceHolder.clear();
+                log.debug("清除已经设置的数据库类型，方便下次使用");
+            }
+        }
+        return proceed;
     }
 
     @Override
