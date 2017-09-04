@@ -21,7 +21,7 @@ public class UserService {
     }
 
     @Transactional
-    int insertUser(User user) {
+    int getUser(User user) {
         return userMapper.insert(user);
     }
 

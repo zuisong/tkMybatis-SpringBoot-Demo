@@ -42,7 +42,7 @@ public class DataSourceAopInService implements PriorityOrdered {
      * @return
      */
     @Around("excudeService()")
-    public Object setDataSourceType(ProceedingJoinPoint joinPoint) {
+    public Object setDataSourceType(ProceedingJoinPoint joinPoint) throws Throwable {
 
         boolean isRoute = false;
 
@@ -61,8 +61,6 @@ public class DataSourceAopInService implements PriorityOrdered {
         try {
             Object[] args = joinPoint.getArgs();
             proceed = joinPoint.proceed(args);
-        } catch (Throwable throwable) {
-            throwable.printStackTrace();
         } finally {
             if (isRoute) {
                 DynamicDataSourceHolder.clear();
