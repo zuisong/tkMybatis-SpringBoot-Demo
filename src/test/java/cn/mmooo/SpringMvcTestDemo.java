@@ -38,8 +38,6 @@ public class SpringMvcTestDemo {
 				.accept(MediaType.APPLICATION_JSON)) // 执行请求
 		
 				.andExpect(status().is(404)); // 400错误请求
-		// .andReturn();
 
-		// System.out.println(result.getAsyncResult());
 	}
 }

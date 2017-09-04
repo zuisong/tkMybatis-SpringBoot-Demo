@@ -7,9 +7,7 @@ public final class DynamicDataSourceHolder {
     public static final String MASTER_DATA_SOURCE = "Master";
     public static final String SLAVE_DATA_SOURCE = "Slave";
 
-    private static final ThreadLocal<String> CONTAINER = ThreadLocal.withInitial(
-            () -> DynamicDataSourceHolder.SLAVE_DATA_SOURCE
-    );
+    private static final ThreadLocal<String> CONTAINER = new ThreadLocal<>();
 
     private static void set(String dataSource) {
         CONTAINER.set(dataSource);

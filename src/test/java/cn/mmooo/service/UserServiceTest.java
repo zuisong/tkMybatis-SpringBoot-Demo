@@ -1,25 +1,21 @@
 package cn.mmooo.service;
 
+import cn.mmooo.AppTest;
 import cn.mmooo.model.User;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.junit4.SpringRunner;
-import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 
-@RunWith(SpringRunner.class)
-@SpringBootTest
-public class UserServiceTest {
+public class UserServiceTest extends AppTest {
 
     @Autowired
     private UserService userService;
 
     @Test
-
     public void deleteUserById() throws Exception {
-        userService.deleteUserById(1);
+        int i = userService.deleteUserById(1);
+       // Assert.assertEquaplls(1, i);
     }
 
     @Test
@@ -31,11 +27,14 @@ public class UserServiceTest {
 
     @Test
     public void selectAllUser() throws Exception {
-        userService.selectAllUser();
+        List<User> users = userService.selectAllUser();
+        System.out.println(users);
     }
+
     @Test
-    public void selectAllUser2() throws Exception {
-        userService.selectAllUser();
+    public void selecUser() throws Exception {
+        User user = userService.getUserById(1);
+        System.out.println(user);
     }
 
 }
