@@ -13,8 +13,14 @@ public class UserMapperTest extends AppTest {
     UserMapper userMapper;
 
     @Test
-    public void test1() {
+    public void selectAll() {
         List<User> users = userMapper.selectAll();
         users.forEach(System.out::println);
+    }
+
+
+    @Test
+    public void deleteById() {
+        userMapper.deleteByPrimaryKey(1);
     }
 }

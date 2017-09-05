@@ -29,8 +29,7 @@ public class DataSourceAopInService implements PriorityOrdered {
     }
 
     @Pointcut("execution(* cn.mmooo.service..*.*(..)) ")
-    public void excudeService() {
-    }
+    public void excudeService() { }
 
     /**
      * 之前的实现方式在Service调用其它service的方法时会再次触发切面，

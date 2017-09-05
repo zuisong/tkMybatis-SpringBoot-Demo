@@ -1,6 +1,7 @@
 package cn.mmooo.service;
 
 import cn.mmooo.AppTest;
+import cn.mmooo.dao.UserMapper;
 import cn.mmooo.model.User;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +12,7 @@ public class UserServiceTest extends AppTest {
 
     @Autowired
     private UserService userService;
+
 
     @Test
     public void deleteUserById() throws Exception {

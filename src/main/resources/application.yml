@@ -27,5 +27,5 @@ pagehelper:
 
 logging:
   level:
-    root: INFO
-    cn.mmooo: debug
+    root: info
+    cn.mmooo: info
