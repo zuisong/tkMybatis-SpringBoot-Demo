@@ -16,12 +16,11 @@ public class UserService {
     private UserMapper userMapper;
 
     int deleteUserById(Integer id) {
-        log.info("log 已经生效");
         return userMapper.deleteByPrimaryKey(id);
     }
 
     @Transactional
-    int getUser(User user) {
+    int insertUser(User user) {
         return userMapper.insert(user);
     }
 

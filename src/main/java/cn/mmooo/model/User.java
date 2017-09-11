@@ -1,6 +1,7 @@
 package cn.mmooo.model;
 
-import lombok.*;
+
+import lombok.Data;
 
 import javax.persistence.*;
 

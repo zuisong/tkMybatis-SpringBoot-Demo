@@ -24,7 +24,7 @@ public class UserServiceTest extends AppTest {
     public void insertUser() throws Exception {
         User user = new User();
         user.setName("chen");
-        userService.getUser(user);
+        userService.insertUser(user);
     }
 
     @Test

@@ -28,4 +28,4 @@ pagehelper:
 logging:
   level:
     root: info
-    cn.mmooo: info
+    cn.mmooo: debug
