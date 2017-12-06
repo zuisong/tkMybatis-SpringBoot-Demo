@@ -39,10 +39,12 @@ public class WriteSqlInterceptor implements Interceptor {
                 throw new IllegalAccessException("非法访问，读库禁止写入方法执行");
             }
         }
-        if (!log.isDebugEnabled())  //测试时，Debug是启用的   允许测试方法直接调用Dao
+        //测试时，Debug是启用的   允许测试方法直接调用Dao
+        if (!log.isDebugEnabled()) {
             if (DynamicDataSourceHolder.get() == null) {
                 throw new IllegalArgumentException("禁止在service层以外的地方调用dao");
             }
+        }
 
         return invocation.proceed();
     }

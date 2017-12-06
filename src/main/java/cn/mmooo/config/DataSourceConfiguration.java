@@ -55,7 +55,7 @@ public class DataSourceConfiguration {
     @Primary
     public DynamicDataSource dataSource(DruidDataSource masterDataSource, DruidDataSource slaveDataSource) {
         log.info("------ 初始化 Dynamic 数据源 ------");
-        val targetDataSources = new HashMap<String, DataSource>();
+        val targetDataSources = new HashMap<String, DataSource>(2);
         targetDataSources.put(MASTER_DATA_SOURCE, masterDataSource);
         targetDataSources.put(SLAVE_DATA_SOURCE, slaveDataSource);
         return new DynamicDataSource(slaveDataSource, targetDataSources);
